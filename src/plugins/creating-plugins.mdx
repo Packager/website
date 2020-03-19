@@ -17,7 +17,7 @@ Creating a plugin is super simple. Let's take a look at the simplest plugin that
 
 ```ts
 const tinyPlugin = {
-    name: "tiny-plugin"
+  name: "tiny-plugin"
 };
 ```
 
@@ -34,7 +34,7 @@ We first need to give our plugin a name.
 
 ```ts
 const cssPlugin = {
-    name: "css-plugin"
+  name: "css-plugin"
 };
 ```
 
@@ -45,23 +45,23 @@ import { resolve, dirname } from "./path-utils";
 import { PluginResolverResult } from "packager";
 
 const cssPlugin = {
-    name: "css-plugin",
-    resolver(moduleId: string, parentId?: string): PluginResolverResult {
-        if (!parentId) {
-            // This will be the entry file
-            return moduleId;
-        }
-
-        const file = this.files.find(
-            f =>
-                f.path === resolve(dirname(parentId), moduleId) &&
-                f.path.endsWith(".css")
-        );
-
-        if (file) return file.path;
-
-        return null;
+  name: "css-plugin",
+  resolver(moduleId: string, parentId?: string): PluginResolverResult {
+    if (!parentId) {
+      // This will be the entry file
+      return moduleId;
     }
+
+    const file = this.files.find(
+      f =>
+        f.path === resolve(dirname(parentId), moduleId) &&
+        f.path.endsWith(".css")
+    );
+
+    if (file) return file.path;
+
+    return null;
+  }
 };
 ```
 
@@ -72,38 +72,38 @@ import { resolve, dirname } from "./path-utils";
 import { PluginResolverResult, PluginLoaderResult } from "packager";
 
 const cssPlugin = {
-    name: "css-plugin",
-    resolver(moduleId: string, parentId?: string): PluginResolverResult {
-        if (!parentId) {
-            // This will be the entry file
-            return moduleId;
-        }
-
-        const file = this.files.find(
-            f =>
-                f.path === resolve(dirname(parentId), moduleId) &&
-                f.path.endsWith(".css")
-        );
-
-        if (file) {
-            return file.path;
-        }
-
-        return null;
-    },
-    loader(moduleId: string): PluginLoaderResult {
-        const file = this.files.find(
-            f => f.path === moduleId && f.path.endsWith(".css")
-        );
-
-        if (file) {
-            return {
-                code: file.code
-            };
-        }
-
-        return null;
+  name: "css-plugin",
+  resolver(moduleId: string, parentId?: string): PluginResolverResult {
+    if (!parentId) {
+      // This will be the entry file
+      return moduleId;
     }
+
+    const file = this.files.find(
+      f =>
+        f.path === resolve(dirname(parentId), moduleId) &&
+        f.path.endsWith(".css")
+    );
+
+    if (file) {
+      return file.path;
+    }
+
+    return null;
+  },
+  loader(moduleId: string): PluginLoaderResult {
+    const file = this.files.find(
+      f => f.path === moduleId && f.path.endsWith(".css")
+    );
+
+    if (file) {
+      return {
+        code: file.code
+      };
+    }
+
+    return null;
+  }
 };
 ```
 
@@ -113,64 +113,64 @@ There's one last step we need to do. Packager _treats every file as a JS file_ s
 // utils.ts
 
 export const addCssExport = (code: string) =>
-    `export default ` +
-    `function addStyles () {` +
-    `const tag = document.createElement('style');` +
-    `tag.type = 'text/css';` +
-    `tag.appendChild(document.createTextNode(\`${code}\`));` +
-    `document.head.appendChild(tag);` +
-    `} addStyles();`;
+  `export default ` +
+  `function addStyles () {` +
+  `const tag = document.createElement('style');` +
+  `tag.type = 'text/css';` +
+  `tag.appendChild(document.createTextNode(\`${code}\`));` +
+  `document.head.appendChild(tag);` +
+  `} addStyles();`;
 
-export const isCss = (filePath) => filePath.endsWith('.css');
+export const isCss = filePath => filePath.endsWith(".css");
 ```
 
 So let's tie everything together and give this a go :)
 
 ```ts
-import { PluginResolverResult, PluginLoaderResult, PluginBeforeBundleResult } from "packager";
+import {
+  PluginResolverResult,
+  PluginLoaderResult,
+  PluginBeforeBundleResult
+} from "packager";
 import { resolve, dirname } from "./path-utils";
 import { addCssExport, isCss } from "./utils";
 
 const cssPlugin = {
-    name: "css-plugin",
-    resolver(moduleId: string, parentId?: string): PluginResolverResult {
-        if (!parentId) {
-            // This will be the entry file
-            return moduleId;
-        }
-
-        const file = this.files.find(
-            f =>
-                f.path === resolve(dirname(parentId), moduleId) &&
-                isCss(f.path)
-        );
-
-        if (file) {
-            return file.path;
-        }
-
-        return null;
-    },
-    loader(moduleId: string): PluginLoaderResult {
-        const file = this.files.find(
-            f => f.path === moduleId && isCss(f.path)
-        );
-
-        if (file) {
-            return {
-                code: file.code
-            };
-        }
-
-        return null;
-    },
-    beforeBundle(code: string, moduleId: string): PluginBeforeBundleResult {
-        if (isCss(moduleId)) {
-            return addCssExport(code);
-        }
-
-        return null;
+  name: "css-plugin",
+  resolver(moduleId: string, parentId?: string): PluginResolverResult {
+    if (!parentId) {
+      // This will be the entry file
+      return moduleId;
     }
+
+    const file = this.files.find(
+      f => f.path === resolve(dirname(parentId), moduleId) && isCss(f.path)
+    );
+
+    if (file) {
+      return file.path;
+    }
+
+    return null;
+  },
+  loader(moduleId: string): PluginLoaderResult {
+    const file = this.files.find(f => f.path === moduleId && isCss(f.path));
+
+    if (file) {
+      return {
+        code: file.code
+      };
+    }
+
+    return null;
+  },
+  beforeBundle(code: string, moduleId: string): PluginBeforeBundleResult {
+    if (isCss(moduleId)) {
+      return addCssExport(code);
+    }
+
+    return null;
+  }
 };
 ```
 
@@ -190,7 +190,7 @@ Registering a plugin is super easy. If you have instantiated your plugin, you ca
 const packager = new Packager();
 
 const myPlugin = {
-    //...
+  //...
 };
 
 packager.registerPlugin(myPlugin);
@@ -212,8 +212,8 @@ This property is used primarily for displaying more descriptive error messages a
 
 ```ts usage=true
 const amazingPlugin = {
-    name: "amazing-plugin"
-    // ...
+  name: "amazing-plugin"
+  // ...
 };
 ```
 
@@ -225,21 +225,16 @@ Head over to [Worker Transpilers](/plugins/worker-transpilers) to see how to cre
 <ApiProps type="PluginTranspiler" required="false" />
 
 ```ts usage=true
-import { createTranspiler } from 'packager';
-import Worker from 'web-worker:./my-worker.ts';
-
-const myTranspiler = createTranspiler({
-    worker: Worker
-});
+import Worker from "web-worker:./my-worker.ts";
 
 const amazingPlugin = {
-    // ...
-    transpiler: myTranspiler
-    // ...
+  // ...
+  transpiler: {
+    worker: Worker
+  }
+  // ...
 };
 ```
-
-<Note>It is recommended to create a Transpiler using a helper that Packager provides.</Note>
 
 #### extensions
 
@@ -251,9 +246,9 @@ As an example, a SASS/SCSS plugin has ".sass" and ".scss" extensions. A Vue Plug
 
 ```ts usage=true
 const amazingPlugin = {
-    // ...
-    extensions: ['.sass', '.scss']
-    // ...
+  // ...
+  extensions: [".sass", ".scss"]
+  // ...
 };
 ```
 
@@ -274,8 +269,8 @@ Returning `null` will defer to the next resolver function in line and if there i
 For more information, see [Rollup's docs for resolvers](https://rollupjs.org/guide/en/#hooks).
 
 <ApiProps
-    type="(moduleId: string, parentId: string | undefined) => string | null | void | { id: string, syntheticNamedExports?: boolean | null }"
-    required="false"
+  type="(moduleId: string, parentId: string | undefined) => string | null | void | { id: string, syntheticNamedExports?: boolean | null }"
+  required="false"
 />
 
 ```ts usage=true
@@ -283,24 +278,24 @@ import { PluginResolverResult } from "packager";
 import { resolve, dirname } from "./path-utils";
 
 const amazingPlugin = {
-    // ...
-    resolver(moduleId: string, parentId?: string): PluginResolverResult {
-        if (!parentId) {
-            // This will be the entry file
-            return moduleId;
-        }
-
-        const file = this.files.find(
-            f => f.path === resolve(dirname(parentId), moduleId)
-        );
-
-        if (file) {
-            return file.path;
-        }
-
-        return null;
+  // ...
+  resolver(moduleId: string, parentId?: string): PluginResolverResult {
+    if (!parentId) {
+      // This will be the entry file
+      return moduleId;
     }
-    // ...
+
+    const file = this.files.find(
+      f => f.path === resolve(dirname(parentId), moduleId)
+    );
+
+    if (file) {
+      return file.path;
+    }
+
+    return null;
+  }
+  // ...
 };
 ```
 
@@ -311,27 +306,27 @@ Once a file has been resolved, we can load that particular file from anywhere we
 For more information, see [Rollup's docs for loaders](https://rollupjs.org/guide/en/#hooks).
 
 <ApiProps
-    type="(moduleId: string) => string | null | void | { id: string, map?: string | SourceMap, syntheticNamedExports?: boolean | null }"
-    required="false"
+  type="(moduleId: string) => string | null | void | { id: string, map?: string | SourceMap, syntheticNamedExports?: boolean | null }"
+  required="false"
 />
 
 ```ts usage=true
 import { PluginLoaderResult } from "packager";
 
 const amazingPlugin = {
-    // ...
-    loader(moduleId: string): PluginLoaderResult {
-        const file = this.files.find(f => f.path === moduleId);
+  // ...
+  loader(moduleId: string): PluginLoaderResult {
+    const file = this.files.find(f => f.path === moduleId);
 
-        if (file) {
-            return {
-                code: file.code
-            }
-        }
-
-        return null;
+    if (file) {
+      return {
+        code: file.code
+      };
     }
-    // ...
+
+    return null;
+  }
+  // ...
 };
 ```
 
@@ -347,11 +342,11 @@ If your plugin has a `transpiler`, the code that is fed into this hook is what c
 import { PluginBeforeBundleResult } from "packager";
 
 const amazingPlugin = {
-    // ...
-    beforeBundle(code: string): PluginBeforeBundleResult {
-        return `function wrapCode () {
+  // ...
+  beforeBundle(code: string): PluginBeforeBundleResult {
+    return `function wrapCode () {
             ${code}
         }`;
-    }
+  }
 };
 ```

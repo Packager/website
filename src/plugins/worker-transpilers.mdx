@@ -15,53 +15,45 @@ There are a few things which need to followed in order to successfully return th
 ## Example
 
 ```ts
-// transpiler.ts
-import { createTranspiler } from "packager";
+// plugin.ts
+import { createPlugin } from "packager";
 import MyWorker from "web-worker:./my-worker.ts";
 
-const transpiler = createTranspiler({
+const plugin = createPlugin({
+  name: "yoyo-plugin",
+  extensions: [".yoyo"],
+  transpiler: {
     worker: MyWorker
+  }
 });
 
 // my-worker.ts
 import { TRANSPILE_STATUS } from "packager";
 
 self.addEventListener("message", async ({ data }) => {
-    const { file, type, context } = data;
+  const { file, type, context } = data;
 
-    if (type === TRANSPILE_STATUS.PREPARE_FILES) {
-        self.postMessage({
-            type: TRANSPILE_STATUS.TRANSPILE_COMPLETE,
-            file
-        });
-    }
-});
-
-// plugin.ts
-import { createPlugin } from "packager";
-import transpiler from "./transpiler";
-
-const plugin = createPlugin({
-    name: "simple-plugin",
-    transpiler,
-    extensions: [".yoyo"]
+  if (type === TRANSPILE_STATUS.PREPARE_FILES) {
+    self.postMessage({
+      type: TRANSPILE_STATUS.TRANSPILE_COMPLETE,
+      file
+    });
+  }
 });
 ```
 
 It may be a little overwhelming at first when you look at the code above, especially if you haven't worked with Web Workers before don't worry, we'll walk through it :)
 
-It is recommended that you create your transpiler using the helper factory provided by Packager `createTranspiler` because it does a few other things in the background for us like safely bind the context, handle queuing in the worker queue and many other things.
-
 ## Statuses
 
-Statuses are used to enable 2-way communication between the Worker and the Parent Transpiler which our Transpiler extends.
+Statuses are used to enable 2-way communication between the Worker and the Core Transpiler.
 
 We enable this by `receiving` and `sending` statuses. So let's take `TRANSPILE_STATUS.PREPARE_FILES` as an example which is actually `TRANSPILER:FILE:PREPARE` under the hood but it's abstracted away using constants.  
-The Parent Transpiler will send this status and our Worker should receive it and respond accordingly.
+The Core Transpiler will send this status and our Worker should receive it and respond accordingly.
 
 #### TRANSPILER:FILE:PREPARE
 
-This is a status that the Parent Transpiler sends to our Worker along with some data in the `data` object.
+This is a status that the Core Transpiler sends to our Worker along with some data in the `data` object.
 
 <ApiProps type="Receivable" />
 
@@ -69,7 +61,7 @@ This is a status that the Parent Transpiler sends to our Worker along with some 
 import { TRANSPILE_STATUS } from "packager";
 
 if (type === TRANSPILE_STATUS.PREPARE_FILES) {
-    // code here
+  // code here
 }
 ```
 
@@ -87,14 +79,14 @@ As an example, a `Vue Plugin` may have this because it depends on `Sass`, `Less`
 import { TRANSPILE_STATUS } from "packager";
 
 self.postMessage({
-    type: TRANSPILE_STATUS.PREPARE_ADDITIONAL
-    // ...
+  type: TRANSPILE_STATUS.PREPARE_ADDITIONAL
+  // ...
 });
 ```
 
 #### TRANSPILER:ADDITIONAL:TRANSPILED
 
-Similar to `TRANSPILER:ADDITIONAL:PREPARE`, you may not used this one. It's used when the Parent Transpiler has transpiled our additional code after we sent the `TRANSPILER:ADDITIONAL:PREPARE` to it with additional code we wanted to transpile.
+Similar to `TRANSPILER:ADDITIONAL:PREPARE`, you may not used this one. It's used when the Core Transpiler has transpiled our additional code after we sent the `TRANSPILER:ADDITIONAL:PREPARE` to it with additional code we wanted to transpile.
 
 <ApiProps type="Receivable" />
 
@@ -102,13 +94,13 @@ Similar to `TRANSPILER:ADDITIONAL:PREPARE`, you may not used this one. It's used
 import { TRANSPILE_STATUS } from "packager";
 
 if (type === TRANSPILE_STATUS.ADDITIONAL_TRANSPILED) {
-    // code here
+  // code here
 }
 ```
 
 #### TRANSPILER:TRANSPILE:COMPLETE
 
-After we have completed all the transpilation in our Worker Transpiler, we will send this status to Parent Transpiler to let it know that we're done and we can move on :)
+After we have completed all the transpilation in our Worker Transpiler, we will send this status to Core Transpiler to let it know that we're done and we can move on :)
 
 <ApiProps type="Sendable" />
 
@@ -116,14 +108,14 @@ After we have completed all the transpilation in our Worker Transpiler, we will 
 import { TRANSPILE_STATUS } from "packager";
 
 self.postMessage({
-    type: TRANSPILE_STATUS.TRANSPILE_COMPLETE
-    // ...
+  type: TRANSPILE_STATUS.TRANSPILE_COMPLETE
+  // ...
 });
 ```
 
 #### TRANSPILER:ERROR:COMPILE
 
-If we want to notify the Parent Transpiler that something messed up in the transpilation process which would notify our users, we can do so by sending this status.
+If we want to notify the Core Transpiler that something messed up in the transpilation process which would notify our users, we can do so by sending this status.
 
 <ApiProps type="Sendable" />
 
@@ -131,14 +123,14 @@ If we want to notify the Parent Transpiler that something messed up in the trans
 import { TRANSPILE_STATUS } from "packager";
 
 self.postMessage({
-    type: TRANSPILE_STATUS.ERROR_COMPILE
-    // ...
+  type: TRANSPILE_STATUS.ERROR_COMPILE
+  // ...
 });
 ```
 
 #### TRANSPILER:ERROR:ADDITIONAL
 
-Same as `TRANSPILER:ERROR:COMPILE`, we can notify Parent Transpiler that something's not right with what we got from additional transpilers.
+Same as `TRANSPILER:ERROR:COMPILE`, we can notify Core Transpiler that something's not right with what we got from additional transpilers.
 
 <ApiProps type="Sendable" />
 
@@ -146,7 +138,7 @@ Same as `TRANSPILER:ERROR:COMPILE`, we can notify Parent Transpiler that somethi
 import { TRANSPILE_STATUS } from "packager";
 
 self.postMessage({
-    type: TRANSPILE_STATUS.ERROR_ADDITIONAL
-    // ...
+  type: TRANSPILE_STATUS.ERROR_ADDITIONAL
+  // ...
 });
 ```
