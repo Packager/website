@@ -2,28 +2,28 @@
 import { jsx } from "theme-ui";
 
 const heading = Tag => {
-    const Component = props => {
-        return !!props.id ? (
-            <Tag {...props}>
-                <a
-                    href={`#${props.id}`}
-                    sx={{
-                        textDecoration: "none",
-                        ":hover": {
-                            textDecoration: "underline"
-                        }
-                    }}
-                >
-                    {props.children}
-                </a>
-            </Tag>
-        ) : (
-            <Tag {...props} />
-        );
-    };
+  const Component = props => {
+    return !!props.id ? (
+      <Tag {...props}>
+        <a
+          href={`#${props.id}`}
+          sx={{
+            textDecoration: "none",
+            ":hover": {
+              textDecoration: "underline"
+            }
+          }}
+        >
+          {props.children}
+        </a>
+      </Tag>
+    ) : (
+      <Tag {...props} />
+    );
+  };
 
-    Component.displayName = Tag;
-    return Component;
+  Component.displayName = Tag;
+  return Component;
 };
 
 export const h2 = heading("h2");

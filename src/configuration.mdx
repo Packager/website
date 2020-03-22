@@ -18,8 +18,8 @@ There are a few options that you can configure in Packager. However, it's import
 
 ```ts
 type PackagerOptions = {
-    cache: boolean;
-    sourcemaps: boolean;
+  cache: boolean;
+  sourcemaps: boolean;
 };
 ```
 
@@ -43,22 +43,22 @@ Sourcemaps allow you to show the code in the browser as it was when entering bun
 
 <ApiProps type="boolean" defaultValue="false" showUsage={false} />
 <Note>
-    Sourcemaps are inlined so when you enable this option, it will greatly
-    increase the size of your bundle.
+  Sourcemaps are inlined so when you enable this option, it will greatly
+  increase the size of your bundle.
 </Note>
 
 ## Bundle Options
 
 ```ts
 type File = {
-    name: string;
-    path: string;
-    code: string;
-    entry?: boolean;
+  name: string;
+  path: string;
+  code: string;
+  entry?: boolean;
 };
 
 type BundleOptions = {
-    dependencies: { [moduleId: string]: string };
+  dependencies: { [moduleId: string]: string };
 };
 ```
 
@@ -66,12 +66,12 @@ Bundle Options need to be registered when bundling files like this:
 
 ```js
 const files: File[] = [
-    {
-        name: "app.js",
-        path: "/src/app.js",
-        code: `console.log('hello world!');`,
-        entry: true
-    }
+  {
+    name: "app.js",
+    path: "/src/app.js",
+    code: `console.log('hello world!');`,
+    entry: true
+  }
 ];
 const bundleOptions: BundleOptions = {};
 
@@ -91,10 +91,10 @@ If you want to have control over this, `dependencies` is a Object with module na
 const packager = new Packager();
 const files = [];
 const bundleOptions = {
-    dependencies: {
-        vue: "2.6.10",
-        react: "16.11.0"
-    }
+  dependencies: {
+    vue: "2.6.10",
+    react: "16.11.0"
+  }
 };
 
 packager.bundle(files, bundleOptions);

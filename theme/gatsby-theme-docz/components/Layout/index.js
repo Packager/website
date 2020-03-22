@@ -10,27 +10,25 @@ import { MainContainer } from "../MainContainer";
 import * as styles from "./styles";
 
 export const Layout = ({ children }) => {
-    const [open, setOpen] = useState(false);
-    const nav = useRef();
+  const [open, setOpen] = useState(false);
+  const nav = useRef();
 
-    return (
-        <BaseLayout sx={styles.base} data-testid="layout">
-            <Global styles={global} />
-            <Main sx={styles.main}>
-                <Header onOpen={() => setOpen(s => !s)} />
-                <div sx={styles.wrapper}>
-                    <Sidebar
-                        ref={nav}
-                        open={open}
-                        onFocus={() => setOpen(true)}
-                        onBlur={() => setOpen(false)}
-                        onClick={() => setOpen(false)}
-                    />
-                    <MainContainer data-testid="main-container">
-                        {children}
-                    </MainContainer>
-                </div>
-            </Main>
-        </BaseLayout>
-    );
+  return (
+    <BaseLayout sx={styles.base} data-testid="layout">
+      <Global styles={global} />
+      <Main sx={styles.main}>
+        <Header onOpen={() => setOpen(s => !s)} />
+        <div sx={styles.wrapper}>
+          <Sidebar
+            ref={nav}
+            open={open}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            onClick={() => setOpen(false)}
+          />
+          <MainContainer data-testid="main-container">{children}</MainContainer>
+        </div>
+      </Main>
+    </BaseLayout>
+  );
 };

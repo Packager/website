@@ -1,30 +1,30 @@
 /** @jsx jsx */
-import { useState } from 'react'
-import { jsx } from 'theme-ui'
+import { useState } from "react";
+import { jsx } from "theme-ui";
 
-import { ChevronDown, ChevronUp } from '../Icons'
-import * as styles from './styles'
+import { ChevronDown, ChevronUp } from "../Icons";
+import * as styles from "./styles";
 
 export const getDefaultValue = ({ defaultValue, type, flowType }) => {
-  const propType = flowType ? flowType : type
-  if (!defaultValue || !defaultValue.value) return null
+  const propType = flowType ? flowType : type;
+  if (!defaultValue || !defaultValue.value) return null;
   if (defaultValue.value === "''") {
-    return '[Empty string]'
+    return "[Empty string]";
   }
-  if (propType && propType.name === 'string') {
-    return defaultValue.value.replace(/\'/g, '"')
+  if (propType && propType.name === "string") {
+    return defaultValue.value.replace(/\'/g, '"');
   }
-  if (typeof defaultValue.value === 'object' && defaultValue.value.toString) {
-    return defaultValue.value.toString()
+  if (typeof defaultValue.value === "object" && defaultValue.value.toString) {
+    return defaultValue.value.toString();
   }
-  return defaultValue.value
-}
+  return defaultValue.value;
+};
 
 export const Prop = ({ propName, prop, getPropType, isToggle }) => {
-  const [showing, setShowing] = useState(isToggle || false)
-  if (!prop.type && !prop.flowType) return null
+  const [showing, setShowing] = useState(isToggle || false);
+  if (!prop.type && !prop.flowType) return null;
 
-  const toggle = () => setShowing(s => !s)
+  const toggle = () => setShowing(s => !s);
   return (
     <div sx={styles.line} data-testid="prop">
       <div sx={styles.content}>
@@ -62,11 +62,11 @@ export const Prop = ({ propName, prop, getPropType, isToggle }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export const Props = ({ props, getPropType, isToggle }) => {
-  const entries = Object.entries(props)
+  const entries = Object.entries(props);
 
   return (
     <div sx={styles.container} data-testid="props">
@@ -80,5 +80,5 @@ export const Props = ({ props, getPropType, isToggle }) => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
