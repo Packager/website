@@ -1,3 +1,4 @@
+import * as mixins from "~utils/mixins";
 import { media } from "~theme/breakpoints";
 
 export const global = {

@@ -48,6 +48,23 @@ export const headerButton = {
   }
 };
 
+export const versionTag = {
+  ...mixins.centerAlign,
+  display: "flex",
+  outline: "none",
+  p: "6px 12px",
+  border: "none",
+  bg: "header.button.bg",
+  color: "header.button.color",
+  fontSize: 0,
+  fontWeight: 600,
+  borderRadius: "4px"
+};
+
+export const versionTagIcon = {
+  mr: "5px"
+};
+
 export const editButton = {
   ...mixins.centerAlign,
   position: "absolute",

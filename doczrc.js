@@ -1,7 +1,7 @@
 export default {
   themesDir: "theme",
   typescript: true,
-  title: "Packager Documentation",
+  title: "Packager Docs",
   description: "Documentation for Packager. The browser-based trans-bundler.",
   ignore: ["readme.md"],
   themeConfig: {

@@ -6,3 +6,4 @@ export { default as Edit } from "react-feather/dist/icons/edit-2";
 export { default as Github } from "react-feather/dist/icons/github";
 export { default as Menu } from "react-feather/dist/icons/menu";
 export { default as Search } from "react-feather/dist/icons/search";
+export { default as Tag } from "react-feather/dist/icons/tag";

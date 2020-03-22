@@ -3,7 +3,7 @@ import { jsx, Box, Flex, useColorMode } from "theme-ui";
 import { useConfig, useCurrentDoc } from "docz";
 
 import * as styles from "./styles";
-import { Edit, Menu, Github } from "../Icons";
+import { Edit, Menu, Github, Tag } from "../Icons";
 import { Logo } from "../Logo";
 
 export const Header = props => {
@@ -41,6 +41,9 @@ export const Header = props => {
               </a>
             </Box>
           )}
+          <Box sx={styles.versionTag}>
+            <Tag size={15} sx={styles.versionTagIcon} /> v0.1.5
+          </Box>
           {showDarkModeSwitch && (
             <button
               sx={styles.headerButton}
