@@ -7,6 +7,12 @@ export const wrapper = {
   zIndex: 1
 };
 
+export const wrapperFull = {
+  ...wrapper,
+  maxWidth: "1080px",
+  margin: "0 auto"
+};
+
 export const innerContainer = {
   ...mixins.centerAlign,
   px: 3,

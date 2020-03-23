@@ -11,6 +11,8 @@ export const main = {
   minHeight: "100vh"
 };
 
+export const mainFull = {};
+
 export const wrapper = {
   display: "flex",
   minHeight: "100vh",

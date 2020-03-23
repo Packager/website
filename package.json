@@ -16,8 +16,10 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
+    "codemirror": "^5.52.2",
     "docz": "latest",
     "react": "^16.8.6",
+    "react-codemirror2": "^7.1.0",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {

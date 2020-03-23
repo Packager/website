@@ -8,7 +8,7 @@ import Wrapper from "../wrapper";
 import Theme from "../index";
 import SEO from "./Seo";
 
-const Route = ({ children, entry, ...defaultProps }) => {
+const Route = ({ ctx, children, entry, ...defaultProps }) => {
   const components = useComponents();
   const NotFound = components.notFound;
   const Layout = components.layout;
@@ -16,7 +16,9 @@ const Route = ({ children, entry, ...defaultProps }) => {
   if (!entry) return <NotFound />;
   return (
     <Wrapper doc={entry}>
-      <Layout {...props}>{children}</Layout>
+      <Layout {...props} ctx={ctx}>
+        {children}
+      </Layout>
     </Wrapper>
   );
 };
@@ -33,11 +35,12 @@ const Layout = ({ children, ...defaultProps }) => {
   const { pageContext: ctx } = defaultProps;
   const db = useDbQuery();
   const entry = findEntry(db, ctx);
+
   return (
     <Fragment>
       {entry && <SEO title={entry.value.name} />}
       <Theme db={db} currentEntry={entry}>
-        <Route {...defaultProps} entry={entry}>
+        <Route ctx={ctx} {...defaultProps} entry={entry}>
           {children}
         </Route>
       </Theme>
