@@ -8,9 +8,9 @@ import iframeCode from "../utils/iframe-worker";
 import { Options } from "../Options";
 
 export const CodePreview = React.forwardRef(
-  ({ libs, files, onInstantRefreshChange }, ref) => {
+  ({ libs, files, onInstantRefreshChange, onPreviewChanged }, ref) => {
     const [activeLibs, setActiveLibs] = useState(libs);
-    const [loaded] = useState(true);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
       if (Object.keys(activeLibs).length !== Object.keys(libs).length) {
@@ -23,9 +23,13 @@ export const CodePreview = React.forwardRef(
 
     useEffect(() => {
       (async () => {
-        await updateIframeLibs(libs);
-        setup();
-        updateFiles(files);
+        if (!loaded) {
+          await updateIframeLibs(libs);
+          setup();
+          setLoaded(true);
+        } else {
+          updateFiles(files);
+        }
       })();
     }, [loaded]);
 
@@ -33,7 +37,7 @@ export const CodePreview = React.forwardRef(
       if (ref.current) {
         updateFiles(files);
       }
-    }, [files, loaded]);
+    }, [files]);
 
     async function updateIframeLibs(libs) {
       if (!ref.current) return;
@@ -85,9 +89,16 @@ export const CodePreview = React.forwardRef(
       onInstantRefreshChange(target.checked);
     }
 
+    function handleExampleSelectorChange(files) {
+      onPreviewChanged({ files });
+    }
+
     return (
       <div sx={styles.container}>
-        <Options handleInstantRefreshChange={handleInstantRefreshChange} />
+        <Options
+          handleInstantRefreshChange={handleInstantRefreshChange}
+          handleExampleSelectorChange={handleExampleSelectorChange}
+        />
         <iframe sx={styles.iframe} ref={ref} />
       </div>
     );

@@ -4,3 +4,7 @@ export const container = {
   height: "43px",
   borderBottom: "1px solid #dcd8d8"
 };
+
+export const exampleSelect = {
+  mr: "10px"
+};

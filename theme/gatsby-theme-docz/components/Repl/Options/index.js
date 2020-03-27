@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import * as styles from "./styles";
+import { baseFiles } from "../utils";
 
 const InstantRefresh = ({ handleOnChange }) => (
   <label htmlFor="instant">
@@ -15,8 +16,52 @@ const InstantRefresh = ({ handleOnChange }) => (
   </label>
 );
 
-export const Options = ({ handleInstantRefreshChange }) => (
+function setActiveState(types) {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has("example")) {
+    return types[0];
+  }
+
+  const type = url.searchParams.get("example").toLowerCase();
+
+  if (types.includes(type)) {
+    return type;
+  } else {
+    return types[0];
+  }
+}
+
+const ExampleSelector = ({ handleOnChange }) => {
+  const types = Object.keys(baseFiles);
+  const [active, setActive] = useState(setActiveState(types));
+
+  useEffect(() => {
+    handleOnChange(baseFiles[active].files);
+  }, [active]);
+
+  return (
+    types.length && (
+      <select
+        sx={styles.exampleSelect}
+        value={active}
+        onChange={({ target }) => setActive(target.value)}
+      >
+        {types.map((type, index) => (
+          <option key={index} value={type}>
+            {baseFiles[type].title}
+          </option>
+        ))}
+      </select>
+    )
+  );
+};
+
+export const Options = ({
+  handleInstantRefreshChange,
+  handleExampleSelectorChange
+}) => (
   <div sx={styles.container}>
+    <ExampleSelector handleOnChange={handleExampleSelectorChange} />
     <InstantRefresh handleOnChange={handleInstantRefreshChange} />
   </div>
 );

@@ -17,10 +17,12 @@ export const Files = ({ currentFile, files, onFileSelect, onAddFile }) => {
     const name = prompt(`Provide a file name without the forward-slash (/)`);
     if (Boolean(name)) {
       if (isValidName(name)) {
+        const isEntry = files.length === 0;
         onAddFile({
           name,
           path: `/${name}`,
-          code: ""
+          code: "",
+          entry: isEntry
         });
       } else {
         alert(`Only these extensions are supported: ${extensions.join(", ")}`);
@@ -37,7 +39,9 @@ export const Files = ({ currentFile, files, onFileSelect, onAddFile }) => {
               key={file.path}
               onClick={() => onFileSelect(file)}
               sx={
-                currentFile.path === file.path ? styles.fileActive : styles.file
+                currentFile && currentFile.path === file.path
+                  ? styles.fileActive
+                  : styles.file
               }
             >
               {file.name}

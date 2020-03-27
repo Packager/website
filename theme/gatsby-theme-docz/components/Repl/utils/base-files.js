@@ -82,7 +82,20 @@ new App({
 ];
 
 export default {
-  react,
-  vue,
-  svelte
+  react: {
+    title: "React",
+    files: react
+  },
+  vue: {
+    title: "Vue",
+    files: vue
+  },
+  svelte: {
+    title: "Svelte",
+    files: svelte
+  },
+  empty: {
+    title: "Empty",
+    files: []
+  }
 };

@@ -40,12 +40,16 @@ export const CodeEditor = ({
   instantRefresh = false
 }) => {
   const [editor, setEditor] = useState(null);
-  const [currentFile, setCurrentFile] = useState(files[1]);
+  const [currentFile, setCurrentFile] = useState(
+    files && files.length ? files[0] : null
+  );
   const [currentLang, setCurrentLang] = useState(null);
 
   useEffect(() => {
-    const lang = getFileLang(currentFile);
-    setCurrentLang(lang);
+    if (currentFile) {
+      const lang = getFileLang(currentFile);
+      setCurrentLang(lang);
+    }
   }, [currentFile]);
 
   useEffect(() => {
@@ -53,6 +57,14 @@ export const CodeEditor = ({
       editor.setOption("mode", languageOptions[currentLang].mode);
     }
   }, [currentLang]);
+
+  useEffect(() => {
+    if (files && files.length && !currentFile) {
+      setCurrentFile(files[0]);
+    } else if (files && files.length === 0) {
+      setCurrentFile(null);
+    }
+  }, [files]);
 
   function onFileSelect(file) {
     if (file.path !== currentFile.path) {
@@ -88,13 +100,15 @@ export const CodeEditor = ({
         onFileSelect={onFileSelect}
         onAddFile={_onAddFile}
       />
-      <ReactCodeMirror
-        sx={styles.editor}
-        value={currentFile.code}
-        options={defaultOptions}
-        onBeforeChange={_onUpdateFile}
-        editorDidMount={cmEditor => setEditor(cmEditor)}
-      />
+      {currentFile && (
+        <ReactCodeMirror
+          sx={styles.editor}
+          value={currentFile.code}
+          options={defaultOptions}
+          onBeforeChange={_onUpdateFile}
+          editorDidMount={cmEditor => setEditor(cmEditor)}
+        />
+      )}
     </CodeEditorWrapper>
   );
 };

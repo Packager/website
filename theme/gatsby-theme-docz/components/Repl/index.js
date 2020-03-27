@@ -8,7 +8,8 @@ import { CodeEditor } from "./CodeEditor";
 import { libs, baseFiles } from "./utils";
 
 export const Repl = () => {
-  const [files, setFiles] = useState(baseFiles.react);
+  // const url = new URL(location.href);
+  const [files, setFiles] = useState([]);
   const iframe = useRef(null);
   const [instantRefresh, setInstantRefresh] = useState(false);
 
@@ -31,6 +32,10 @@ export const Repl = () => {
     setInstantRefresh(isInstant);
   }
 
+  function handlePreviewChange({ files }) {
+    setFiles(files);
+  }
+
   return (
     <BaseRepl>
       <CodeEditor
@@ -43,6 +48,7 @@ export const Repl = () => {
         ref={iframe}
         libs={libs}
         files={files}
+        onPreviewChanged={handlePreviewChange}
         onInstantRefreshChange={handleInstantRefreshChange}
       />
     </BaseRepl>
