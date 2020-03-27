@@ -1,5 +1,3 @@
-import { media } from "~theme/breakpoints";
-
 export const container = {
   backgroundColor: "background",
   position: "relative",

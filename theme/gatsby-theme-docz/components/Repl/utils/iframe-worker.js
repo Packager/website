@@ -1,6 +1,11 @@
 export default `
-  let packager = new Packager();
-  let domCopy = Object.assign(document, {});
+  if (!window.packager) {
+    var packager = new Packager();
+    var domCopy = Object.assign(document, {});
+  } else {
+    packager = new Packager();
+    domCopy = Object.assign(document, {});
+  }
 
   packager.registerPlugin(coffeescriptPlugin);
   packager.registerPlugin(commonjsPlugin);

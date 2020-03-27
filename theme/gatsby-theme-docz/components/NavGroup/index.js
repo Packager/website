@@ -19,7 +19,7 @@ export const NavGroup = ({ item, sidebarRef }) => {
     if (sidebarRef.current && currentDocRef.current) {
       sidebarRef.current.scrollTo(0, currentDocRef.current.offsetTop);
     }
-  }, []);
+  });
   return (
     <div sx={styles.wrapper} data-testid="nav-group">
       <div sx={styles.title} onClick={toggleSubheadings}>

@@ -10,7 +10,7 @@ export const Header = props => {
   const { onOpen, isFull = false } = props;
   const {
     repository,
-    themeConfig: { showDarkModeSwitch, showMarkdownEditButton }
+    themeConfig: { showMarkdownEditButton }
   } = useConfig();
   const { edit = true, ...doc } = useCurrentDoc();
 
