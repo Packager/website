@@ -37,7 +37,7 @@ export const Header = props => {
             </Box>
           )}
           <Box sx={styles.versionTag}>
-            <Tag size={15} sx={styles.versionTagIcon} /> v0.1.5
+            <Tag size={15} sx={styles.versionTagIcon} /> v0.1.6
           </Box>
         </Flex>
         {showMarkdownEditButton && edit && doc.link && (
