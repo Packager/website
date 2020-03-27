@@ -14,6 +14,7 @@ export default {
     "Configuration",
     "API Reference",
     "Plugins",
-    "Roadmap"
+    "Roadmap",
+    "REPL"
   ]
 };
