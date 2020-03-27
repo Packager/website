@@ -5,6 +5,8 @@ import * as styles from "./styles";
 
 import iframeCode from "../utils/iframe-worker";
 
+import { Options } from "../Options";
+
 export const CodePreview = React.forwardRef(
   ({ libs, files, onInstantRefreshChange }, ref) => {
     const [activeLibs, setActiveLibs] = useState(libs);
@@ -85,15 +87,7 @@ export const CodePreview = React.forwardRef(
 
     return (
       <div sx={styles.container}>
-        <label htmlFor="instant">
-          <input
-            id="instant"
-            name="instant"
-            type="checkbox"
-            onChange={handleInstantRefreshChange}
-          />
-          Instant Refresh?
-        </label>
+        <Options handleInstantRefreshChange={handleInstantRefreshChange} />
         <iframe sx={styles.iframe} ref={ref} />
       </div>
     );

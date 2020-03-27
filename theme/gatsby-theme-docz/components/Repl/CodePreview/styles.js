@@ -6,6 +6,8 @@ export const container = {
 };
 
 export const iframe = {
-  width: "calc(100% - 2px)",
-  height: "calc(100% - 2px)"
+  border: "none",
+  borderLeft: "1px solid black",
+  width: "calc(100% - 1px)",
+  height: "100%"
 };

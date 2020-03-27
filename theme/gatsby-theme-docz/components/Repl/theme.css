@@ -1,0 +1,101 @@
+.cm-s-packager.CodeMirror {
+  font-size: 14px;
+  padding-top: 10px;
+}
+.cm-s-packager.CodeMirror,
+.cm-s-packager .CodeMirror-gutters {
+  background-color: rgb(237, 243, 249) !important;
+  color: rgb(57, 58, 52) !important;
+  border: none;
+}
+.cm-s-packager .CodeMirror-gutters {
+  color: #282a36;
+}
+.cm-s-packager .CodeMirror-cursor {
+  border-left: solid thin rgb(57, 58, 52);
+}
+.cm-s-packager .CodeMirror-linenumber {
+  color: rgb(0, 0, 0, 0.5);
+  padding: 0 7px 0 10px;
+  width: 30px !important;
+  text-align: center;
+}
+.cm-s-packager span.cm-comment {
+  color: #6272a4;
+}
+.cm-s-packager span.cm-string,
+.cm-s-packager span.cm-string-2 {
+  color: rgb(227, 17, 108);
+}
+.cm-s-packager span.cm-number {
+  color: #bd93f9;
+}
+.cm-s-packager span.cm-variable {
+  color: rgb(57, 58, 52);
+}
+/**
+ * property on a variable eg. user.name
+ */
+.cm-s-packager span.cm-variable + span.cm-property {
+  color: rgb(215, 58, 73);
+}
+.cm-s-packager span.cm-variable-2 {
+  color: rgb(215, 58, 73);
+}
+.cm-s-packager span.cm-def {
+  color: rgb(57, 58, 52);
+}
+.cm-s-packager span.cm-operator {
+  color: rgb(57, 58, 52);
+}
+.cm-s-packager span.cm-keyword {
+  color: rgb(0, 0, 159);
+}
+/**
+ * "App" from the import statement (import App from "app")
+ */
+.cm-s-packager span.cm-keyword + span.cm-variable {
+  color: rgb(57, 58, 52);
+}
+/**
+ * "from" from the import statement (import App from "app")
+ */
+.cm-s-packager span.cm-keyword + span.cm-variable + span.cm-variable {
+  color: rgb(0, 0, 159);
+}
+.cm-s-packager span.cm-atom {
+  color: #bd93f9;
+}
+.cm-s-packager span.cm-meta {
+  color: #f8f8f2;
+}
+.cm-s-packager span.cm-tag.cm-bracket {
+  color: rgb(57, 58, 52);
+}
+.cm-s-packager span.cm-tag {
+  color: rgb(0, 0, 159);
+}
+.cm-s-packager span.cm-attribute {
+  color: rgb(0, 164, 219);
+}
+.cm-s-packager span.cm-qualifier {
+  color: #50fa7b;
+}
+.cm-s-packager span.cm-property {
+  color: rgb(57, 58, 52);
+}
+.cm-s-packager span.cm-builtin {
+  color: #50fa7b;
+}
+.cm-s-packager span.cm-variable-3,
+.cm-s-packager span.cm-type {
+  color: #ffb86c;
+}
+
+.cm-s-packager .CodeMirror-activeline-background {
+  background: rgba(255, 255, 255, 0.1);
+}
+.cm-s-packager .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}

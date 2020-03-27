@@ -3,14 +3,16 @@ const active = "#000000";
 
 export const filesWrapper = {
   display: "flex",
-  borderBottom: "1px solid #eee",
-  overflow: "scroll"
+  borderBottom: "1px solid #dcd8d8",
+  overflow: "scroll",
+  minHeight: "43px"
 };
 
 export const file = {
   color: inactive,
   p: "10px",
-  position: "relative"
+  position: "relative",
+  height: "42px"
 };
 
 export const fileActive = {
@@ -29,11 +31,13 @@ export const fileActive = {
 };
 
 export const fileAdd = {
-  fontSize: "28px",
-  fontWeight: "bold",
-  px: "5px",
+  fontSize: "24px",
+  px: "10px",
   color: inactive,
   cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  pt: "3px",
   "&:hover": {
     color: active
   }

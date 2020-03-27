@@ -11,7 +11,9 @@ import { options as languageOptions, getFileLang } from "../utils";
 // Weird fix for CodeMirror in SSR mode.
 if (typeof navigator !== "undefined") {
   require("codemirror/lib/codemirror.css");
+  require("../theme.css");
   require("codemirror/mode/javascript/javascript");
+  require("codemirror/mode/jsx/jsx");
   require("codemirror/mode/vue/vue");
   require("codemirror/mode/xml/xml");
   require("codemirror/mode/stylus/stylus");
@@ -22,7 +24,8 @@ if (typeof navigator !== "undefined") {
 
 const defaultOptions = {
   lineNumbers: true,
-  tabSize: 2
+  tabSize: 2,
+  theme: "packager"
 };
 
 const CodeEditorWrapper = ({ children }) => (

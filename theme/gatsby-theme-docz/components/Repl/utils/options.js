@@ -1,6 +1,8 @@
 const js = {
   mode: { name: "javascript", json: true, typescript: true }
 };
+const jsx = { mode: { name: "jsx" } };
+const tsx = { mode: { name: "typescript-jsx" } };
 const vue = { mode: { name: "vue" } };
 const html = { mode: { name: "xml", htmlMode: true } };
 const svelte = { mode: { name: "handlebars", base: "text/html" } };
@@ -9,10 +11,13 @@ const scss = { mode: { name: "scss" } };
 const sass = { mode: { name: "sass" } };
 const less = { mode: { name: "less" } };
 const css = { mode: { name: "css" } };
-const coffeescript = { mode: { name: "coffeescript" } };
+const coffee = { mode: { name: "coffeescript" } };
 
 export default {
   js,
+  jsx: jsx,
+  ts: js,
+  tsx: jsx,
   vue,
   html,
   svelte,
@@ -21,5 +26,5 @@ export default {
   sass,
   less,
   css,
-  coffeescript
+  coffee
 };

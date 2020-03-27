@@ -8,7 +8,7 @@ import { CodeEditor } from "./CodeEditor";
 import { libs, baseFiles } from "./utils";
 
 export const Repl = () => {
-  const [files, setFiles] = useState(baseFiles.svelte);
+  const [files, setFiles] = useState(baseFiles.react);
   const iframe = useRef(null);
   const [instantRefresh, setInstantRefresh] = useState(false);
 

@@ -3,17 +3,28 @@ import { jsx } from "theme-ui";
 import { Fragment } from "react";
 
 import * as styles from "./styles";
+import { options } from "../utils";
 
 export const Files = ({ currentFile, files, onFileSelect, onAddFile }) => {
+  const extensions = Object.keys(options);
+
+  function isValidName(name) {
+    const ext = name.split(".").pop();
+    return extensions.includes(ext);
+  }
+
   function askForFileName() {
     const name = prompt(`Provide a file name without the forward-slash (/)`);
-
     if (Boolean(name)) {
-      onAddFile({
-        name,
-        path: `/${name}`,
-        code: ""
-      });
+      if (isValidName(name)) {
+        onAddFile({
+          name,
+          path: `/${name}`,
+          code: ""
+        });
+      } else {
+        alert(`Only these extensions are supported: ${extensions.join(", ")}`);
+      }
     }
   }
 
