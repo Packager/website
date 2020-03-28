@@ -17,12 +17,15 @@ const InstantRefresh = ({ handleOnChange }) => (
 );
 
 function setActiveState(types) {
-  const url = new URL(window.location.href);
-  if (!url.searchParams.has("example")) {
-    return types[0];
+  let url = null;
+  if (typeof window !== "undefined") {
+    url = new URL(window.location.href);
+    if (!url.searchParams.has("example")) {
+      return types[0];
+    }
   }
 
-  const type = url.searchParams.get("example").toLowerCase();
+  const type = url ? url.searchParams.get("example").toLowerCase() : "";
 
   if (types.includes(type)) {
     return type;
