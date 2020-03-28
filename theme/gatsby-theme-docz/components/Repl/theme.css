@@ -89,7 +89,7 @@
 }
 .cm-s-packager span.cm-variable-3,
 .cm-s-packager span.cm-type {
-  color: #ffb86c;
+  color: rgb(54, 172, 170);
 }
 
 .cm-s-packager .CodeMirror-activeline-background {
