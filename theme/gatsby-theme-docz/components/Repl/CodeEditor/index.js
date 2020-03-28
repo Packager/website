@@ -60,7 +60,13 @@ export const CodeEditor = ({
 
   useEffect(() => {
     if (files && files.length) {
-      setCurrentFile(files[0]);
+      if (!currentFile) {
+        setCurrentFile(files[0]);
+      } else if (
+        !(currentFile && files.find(f => f.code === currentFile.code))
+      ) {
+        setCurrentFile(files[0]);
+      }
     } else {
       setCurrentFile(null);
     }
