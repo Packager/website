@@ -57,6 +57,14 @@ export const CodePreview = React.forwardRef(
       }
     }
 
+    function removeStyles() {
+      if (!ref.current) return;
+      const document = ref.current.contentWindow.document;
+      document
+        .querySelectorAll(`style[data-src][type="text/css"]`)
+        .forEach(s => s.remove());
+    }
+
     function loadScript(name, url, document) {
       return new Promise(resolve => {
         const script = document.createElement("script");
@@ -91,6 +99,7 @@ export const CodePreview = React.forwardRef(
 
     function handleExampleSelectorChange(files) {
       onPreviewChanged({ files });
+      removeStyles();
     }
 
     return (

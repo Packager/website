@@ -59,9 +59,9 @@ export const CodeEditor = ({
   }, [currentLang]);
 
   useEffect(() => {
-    if (files && files.length && !currentFile) {
+    if (files && files.length) {
       setCurrentFile(files[0]);
-    } else if (files && files.length === 0) {
+    } else {
       setCurrentFile(null);
     }
   }, [files]);
