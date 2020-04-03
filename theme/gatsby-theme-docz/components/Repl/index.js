@@ -8,7 +8,6 @@ import { CodeEditor } from "./CodeEditor";
 import { libs, baseFiles } from "./utils";
 
 export const Repl = () => {
-  // const url = new URL(location.href);
   const [files, setFiles] = useState([]);
   const iframe = useRef(null);
   const [instantRefresh, setInstantRefresh] = useState(false);
